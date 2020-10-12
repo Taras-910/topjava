@@ -1,7 +1,7 @@
 package ru.javawebinar.topjava.util;
 
 import ru.javawebinar.topjava.model.Meal;
-import ru.javawebinar.topjava.model.MealTo;
+import ru.javawebinar.topjava.to.MealTo;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -16,8 +16,12 @@ import java.util.stream.Collectors;
 
 public class MealsUtil {
     public static final int DEFAULT_CALORIES_PER_DAY = 2000;
+    public static final LocalDate MIN_DATE = LocalDate.of(1000, 1, 1);
+    public static final LocalDate MAX_DATE = LocalDate.of(3000, 1, 1);
+    public static final LocalTime MIN_TIME = LocalTime.of(0, 0, 0);
+    public static final LocalTime MAX_TIME = LocalTime.of(23, 59, 59);
 
-    public static final List<Meal> meals = Arrays.asList(
+    public static final List<Meal> mealsUser = Arrays.asList(
             new Meal(LocalDateTime.of(2020, Month.JANUARY, 30, 10, 0), "Завтрак", 500),
             new Meal(LocalDateTime.of(2020, Month.JANUARY, 30, 13, 0), "Обед", 1000),
             new Meal(LocalDateTime.of(2020, Month.JANUARY, 30, 20, 0), "Ужин", 500),
@@ -25,6 +29,11 @@ public class MealsUtil {
             new Meal(LocalDateTime.of(2020, Month.JANUARY, 31, 10, 0), "Завтрак", 1000),
             new Meal(LocalDateTime.of(2020, Month.JANUARY, 31, 13, 0), "Обед", 500),
             new Meal(LocalDateTime.of(2020, Month.JANUARY, 31, 20, 0), "Ужин", 410)
+    );
+
+    public static final List<Meal> mealsAdmin = Arrays.asList(
+            new Meal(LocalDateTime.of(2020, Month.JANUARY, 31, 13, 0), "Обед2", 1500),
+            new Meal(LocalDateTime.of(2020, Month.JANUARY, 31, 20, 0), "Ужин2", 1000)
     );
 
     public static List<MealTo> getTos(Collection<Meal> meals, int caloriesPerDay) {
