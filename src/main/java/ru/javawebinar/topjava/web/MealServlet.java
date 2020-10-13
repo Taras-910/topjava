@@ -17,7 +17,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
-import java.util.Objects;
 
 import static ru.javawebinar.topjava.util.MealsUtil.*;
 
@@ -64,6 +63,7 @@ public class MealServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
         log.info("action={}", action);
+
         switch (action == null ? "all" : request.getParameter("action")) {
             case "delete":
                 int id = getId(request);
@@ -94,10 +94,5 @@ public class MealServlet extends HttpServlet {
                 request.getRequestDispatcher("/meals.jsp").forward(request, response);
                 break;
         }
-    }
-
-    private int getId(HttpServletRequest request) {
-        String paramId = Objects.requireNonNull(request.getParameter("id"));
-        return Integer.parseInt(paramId);
     }
 }

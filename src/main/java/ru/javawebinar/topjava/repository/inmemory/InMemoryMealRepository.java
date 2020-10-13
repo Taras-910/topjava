@@ -6,11 +6,11 @@ import org.springframework.stereotype.Repository;
 import org.springframework.util.CollectionUtils;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.repository.MealRepository;
+import ru.javawebinar.topjava.util.MealsUtil;
 
 import java.time.LocalDate;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
@@ -21,7 +21,6 @@ import static ru.javawebinar.topjava.util.MealsUtil.mealsUser;
 public class InMemoryMealRepository implements MealRepository {
     private final Logger log = LoggerFactory.getLogger(getClass());
     public final Map<Integer, Map<Integer, Meal>> repository = new ConcurrentHashMap<>();
-    private final AtomicInteger counter = new AtomicInteger(0);
 
     {
         mealsAdmin.forEach(m -> save(m, 1));
@@ -32,7 +31,7 @@ public class InMemoryMealRepository implements MealRepository {
     public Meal save(Meal meal, int userId) {
         Map<Integer, Meal> userMap = repository.getOrDefault(userId, new HashMap<>());
         if (meal.isNew()) {
-            meal.setId(counter.incrementAndGet());
+            meal.setId(MealsUtil.counter.incrementAndGet());
         }
         userMap.put(meal.getId(), meal);
         repository.put(userId, userMap);

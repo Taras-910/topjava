@@ -5,10 +5,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.repository.UserRepository;
+import ru.javawebinar.topjava.util.MealsUtil;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 import static ru.javawebinar.topjava.model.Role.ADMIN;
@@ -18,14 +18,14 @@ import static ru.javawebinar.topjava.model.Role.USER;
 public class InMemoryUserRepository implements UserRepository {
     private static final Logger log = LoggerFactory.getLogger(InMemoryUserRepository.class);
     private final Map<Integer, User> repository = new ConcurrentHashMap<>();
-    private final AtomicInteger counter = new AtomicInteger(0);
 
     public static final List<User> users = Arrays.asList(
-            new User(null, "", "user@yandex.ru", "", 1500, true, Collections.singleton(USER)),
-            new User(null, "", "admin@gmail.com", "", 2000, true, Collections.singleton(ADMIN))
+            new User(2, "User", "user@yandex.ru", "password", 1500, true, Collections.singleton(USER)),
+            new User(1, "Admin", "admin@gmail.com", "admin", 2000, false, Collections.singleton(ADMIN))
     );
 
     {
+        users.forEach(u -> u.setRegistered(new Date(120, 0, 29)));
         users.forEach(this::save);
     }
 
@@ -33,12 +33,9 @@ public class InMemoryUserRepository implements UserRepository {
     public User save(User user) {
         log.info("save {}", user);
         if(user.isNew()){
-            user.setId(counter.incrementAndGet());
-            repository.put(user.getId(), user);
+            user.setId(MealsUtil.counter.incrementAndGet());
         }
-        else{
-            repository.computeIfPresent(user.getId(), (k, v) -> user);
-        }
+        repository.put(user.getId(), user);
         return user;
     }
 
@@ -58,8 +55,7 @@ public class InMemoryUserRepository implements UserRepository {
     public List<User> getAll() {
         log.info("getAll");
         return repository.values().stream()
-                .sorted((o1, o2) -> o1.getName() != o2.getName()? o1.getName().
-                        compareTo(o2.getEmail()): o1.getEmail().compareTo(o2.getEmail()))
+                .sorted(Comparator.comparing(User::getName).thenComparing(User::getEmail))
                 .collect(Collectors.toList());
     }
 

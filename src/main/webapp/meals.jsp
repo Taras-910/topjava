@@ -14,6 +14,9 @@
         .excess {
             color: red;
         }
+        .items {
+            display:inline-block;
+        }
     </style>
 </head>
 <body>
@@ -22,22 +25,26 @@
     <hr/>
     <h2>Meals</h2>
     <form method="get" action="meals">
-        <dl>
-            <dt>От даты (включая):</dt>
-            <dd><input type="date" name="startDate"></dd>
-        </dl>
-        <dl>
-            <dt>До даты (включая):</dt>
-            <dd><input type="date" name="endDate"></dd>
-        </dl>
-        <dl>
-            <dt>От времени (включая)</dt>
-            <dd><input type="time" name="startTime"></dd>
-        </dl>
-        <dl>
-            <dt>До времени (исключая)</dt>
-            <dd><input type="time" name="endTime"></dd>
-        </dl>
+        <tr>
+            <dl class="items">
+                <dt>От даты (включая):</dt>
+                <dd><input type="date" name="startDate"></dd>
+            </dl>
+            <dl class="items">
+                <dt>До даты (включая):</dt>
+                <dd><input type="date" name="endDate"></dd>
+            </dl>
+        </tr>
+        <tr>
+            <dl class="items">
+                <dt>От времени (включая)</dt>
+                <dd><input type="time" name="startTime"></dd>
+            </dl>
+            <dl class="items">
+                <dt>До времени (исключая)</dt>
+                <dd><input type="time" name="endTime"></dd>
+            </dl>
+        </tr>
         <button type="submit">Filter</button>
         <button onclick="window.history.back()" type="button">Cancel</button>
     </form>
@@ -47,7 +54,6 @@
     <table border="1" cellpadding="8" cellspacing="0">
         <thead>
         <tr>
-            <th>id</th>
             <th>Date</th>
             <th>Description</th>
             <th>Calories</th>
@@ -58,7 +64,6 @@
         <c:forEach items="${meals}" var="meal">
             <jsp:useBean id="meal" type="ru.javawebinar.topjava.to.MealTo"/>
             <tr class="${meal.excess ? 'excess' : 'normal'}">
-                <td>${meal.id}</td>
                 <td>
                         <%--${meal.dateTime.toLocalDate()} ${meal.dateTime.toLocalTime()}--%>
                         <%--<%=TimeUtil.toString(meal.getDateTime())%>--%>
