@@ -33,6 +33,7 @@ public class JpaUserRepository implements UserRepository {
             em.persist(user);
             return user;
         } else {
+
             return em.merge(user);
         }
     }
