@@ -38,6 +38,9 @@ public abstract class AbstractTest {
 
     @AfterClass
     public static void after() {
-           log.info(listResult.toString());
+        log.info("\ntest                   millis\n" +
+        "--------------------------------------------");
+        listResult.forEach(s -> System.out.print(s + "\n"));
+        System.out.print("--------------------------------------------\n");
     }
 }
