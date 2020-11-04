@@ -1,5 +1,8 @@
 package ru.javawebinar.topjava.repository.jpa;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ru.javawebinar.topjava.model.Meal;
@@ -11,9 +14,11 @@ import javax.persistence.PersistenceContext;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Profile("jpa")
 @Repository
 @Transactional(readOnly = true)
 public class JpaMealRepository implements MealRepository {
+    private final Logger log = LoggerFactory.getLogger(getClass());
 
     @PersistenceContext
     private EntityManager em;
@@ -42,6 +47,7 @@ public class JpaMealRepository implements MealRepository {
 
     @Override
     public Meal get(int id, int userId) {
+        log.info("get id {} userId {}", id, userId);
         Meal meal = em.find(Meal.class, id);
         return meal != null && meal.getUser().getId() == userId ? meal : null;
     }
