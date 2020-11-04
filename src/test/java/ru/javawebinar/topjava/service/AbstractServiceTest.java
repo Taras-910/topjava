@@ -1,4 +1,4 @@
-package ru.javawebinar.topjava;
+package ru.javawebinar.topjava.service;
 
 import org.junit.AfterClass;
 import org.junit.Rule;
@@ -11,6 +11,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.junit4.SpringRunner;
+import ru.javawebinar.topjava.ActiveDbProfileResolver;
 
 import java.util.concurrent.TimeUnit;
 

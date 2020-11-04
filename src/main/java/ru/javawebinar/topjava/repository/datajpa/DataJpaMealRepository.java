@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.repository.MealRepository;
@@ -13,6 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Profile("datajpa")
+@Transactional(readOnly = true)
 @Repository
 public class DataJpaMealRepository implements MealRepository {
     private final Logger log = LoggerFactory.getLogger(getClass());
@@ -25,6 +27,7 @@ public class DataJpaMealRepository implements MealRepository {
     }
 
     @Override
+    @Transactional
     public Meal save(Meal meal, int userId) {
         User user = crudUserRepository.findById(userId).orElse(null);
         meal.setUser(user);
@@ -35,6 +38,7 @@ public class DataJpaMealRepository implements MealRepository {
     }
 
     @Override
+    @Transactional
     public boolean delete(int id, int userId) {
         return crudRepository.delete(id, userId) != 0;
     }
@@ -44,6 +48,12 @@ public class DataJpaMealRepository implements MealRepository {
         log.info("get id {} for user {}", id, userId);
         Meal meal = crudRepository.findById(id).orElse(null);
         return meal != null && meal.getUser().getId() != userId ? null : meal;
+    }
+
+    @Override
+    public Meal getWith(int id, int userId) {
+        log.info("getWith id {} for user {}", id, userId);
+        return Optional.ofNullable(crudRepository.getWith(id, userId)).orElse(null);
     }
 
     @Override

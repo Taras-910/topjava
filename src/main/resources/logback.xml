@@ -20,7 +20,8 @@
         </encoder>
     </appender>
 
-    <logger name="ru.javawebinar.topjava.**" level="debug"/>
+    <logger name="ru.javawebinar.topjava.**" level="info"/>
+    <logger class="org.springframework.orm.jpa.JpaTransactionManager" level="info"/>
 
     <root level="info">
         <appender-ref ref="file"/>

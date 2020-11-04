@@ -2,10 +2,11 @@ package ru.javawebinar.topjava.service;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
 import org.springframework.dao.DataAccessException;
-import ru.javawebinar.topjava.AbstractServiceTest;
 import ru.javawebinar.topjava.UserTestData;
 import ru.javawebinar.topjava.model.Role;
 import ru.javawebinar.topjava.model.User;
@@ -16,8 +17,8 @@ import java.util.List;
 import static org.junit.Assert.assertThrows;
 import static ru.javawebinar.topjava.UserTestData.*;
 
-public class UserServiceTest extends AbstractServiceTest {
-
+public abstract class AbstractUserServiceTest extends AbstractServiceTest {
+    Logger log = LoggerFactory.getLogger(getClass());
     @Autowired
     private UserService service;
 
@@ -74,7 +75,7 @@ public class UserServiceTest extends AbstractServiceTest {
     }
 
     @Test
-    public void update() {
+    public void updateUser() {
         User updated = getUpdated();
         service.update(updated);
         USER_MATCHER.assertMatch(service.get(USER_ID), getUpdated());

@@ -1,5 +1,7 @@
 package ru.javawebinar.topjava.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -14,7 +16,7 @@ import static ru.javawebinar.topjava.util.ValidationUtil.checkNotFoundWithId;
 
 @Service
 public class UserService {
-
+    private final Logger log = LoggerFactory.getLogger(getClass());
     private final UserRepository repository;
 
     public UserService(UserRepository repository) {
@@ -34,6 +36,10 @@ public class UserService {
 
     public User get(int id) {
         return checkNotFoundWithId(repository.get(id), id);
+    }
+
+    public User getWith(int id) {
+        return checkNotFoundWithId(repository.getWith(id), id);
     }
 
     public User getByEmail(String email) {
