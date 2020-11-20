@@ -2,6 +2,8 @@ package ru.javawebinar.topjava.service;
 
 import org.junit.Assume;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.dao.DataAccessException;
@@ -19,7 +21,7 @@ import static org.junit.Assert.assertThrows;
 import static ru.javawebinar.topjava.UserTestData.*;
 
 public abstract class AbstractUserServiceTest extends AbstractServiceTest {
-
+    private final Logger log = LoggerFactory.getLogger(getClass());
     @Autowired
     protected UserService service;
 
@@ -33,7 +35,11 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest {
         User newUser = getNew();
         newUser.setId(newId);
         USER_MATCHER.assertMatch(created, newUser);
-        USER_MATCHER.assertMatch(service.get(newId), newUser);
+        User repoUser = service.get(newId);
+        log.info("created {}", created);
+        log.info("repoUser {}", repoUser);
+
+        USER_MATCHER.assertMatch(repoUser, newUser);
     }
 
     @Test
