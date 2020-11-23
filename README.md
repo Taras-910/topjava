@@ -1,5 +1,46 @@
 Java Enterprise Online Project 
 ===============================
+
+#### curl requests:
+
+MealRestController
+## meals getAll
+`curl --location --request GET 'http://localhost:8080/topjava/rest/admin/meals'`
+## meals get
+`curl --location --request GET 'http://localhost:8080/topjava/rest/admin/meals/100008'`
+## meals getBetween
+`curl --location --request GET 'http://localhost:8080/topjava/rest/admin/meals/filter?startDate=2020-01-30&startTime&endDate=2020-01-30&endTime'`
+## meals createWithLocation
+`curl --location --request POST 'http://localhost:8080/topjava/rest/admin/meals' \
+ --header 'Content-Type: application/json' \
+ --data-raw '{"dateTime":[
+ 2020,
+ 1,
+ 31,
+ 13,
+ 30
+ ],
+  "description": "newEating2",
+  "calories": 222
+ }
+ '`
+## meals update
+`curl --location --request PUT 'http://localhost:8080/topjava/rest/admin/meals/100003' \
+ --header 'Content-Type: application/json' \
+ --data-raw '{"dateTime": [
+ 2020,
+ 2,
+ 1,
+ 18,
+ 0
+ ],
+  "description": "Измененный ужин",
+  "calories": 444
+ }'`
+## meals delete
+`curl --location --request DELETE 'http://localhost:8080/topjava/rest/admin/meals/100004'`
+
+
 Разработка полнофункционального Spring/JPA Enterprise приложения c авторизацией и правами доступа на основе ролей с использованием наиболее популярных инструментов и технологий Java: Maven, Spring MVC, Security, JPA(Hibernate), REST(Jackson), Bootstrap (css,js), datatables, jQuery + plugins, Java 8 Stream and Time API и хранением в базах данных Postgresql и HSQLDB.
 
 ![topjava_structure](https://user-images.githubusercontent.com/13649199/27433714-8294e6fe-575e-11e7-9c41-7f6e16c5ebe5.jpg)
@@ -221,3 +262,4 @@ Java Enterprise Online Project
 -  <a href="http://www.bookvoed.ru/book?id=639284">Редмонд Э.: Семь баз данных за семь недель. Введение в современные базы данных и идеологию NoSQL</a>
 -  <a href="http://www.ozon.ru/context/detail/id/3174887/">Brian Goetz: Java Concurrency in Practice</a>
 -  <a href="http://bookvoed.ru/book?id=2593572">G.L. McDowell: Cracking the Coding Interview</a>
+
