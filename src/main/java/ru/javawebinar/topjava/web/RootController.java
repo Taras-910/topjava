@@ -1,5 +1,7 @@
 package ru.javawebinar.topjava.web;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class RootController {
+    public static final Logger log = LoggerFactory.getLogger(RootController.class);
     @Autowired
     private UserService userService;
 
@@ -26,6 +29,7 @@ public class RootController {
 
     @GetMapping("/users")
     public String getUsers(Model model) {
+        log.info("getUsers");
         model.addAttribute("users", userService.getAll());
         return "users";
     }
@@ -39,6 +43,7 @@ public class RootController {
 
     @GetMapping("/meals")
     public String getMeals(Model model) {
+        log.info("getMeals");
         model.addAttribute("meals",
                 MealsUtil.getTos(mealService.getAll(SecurityUtil.authUserId()), SecurityUtil.authUserCaloriesPerDay()));
         return "meals";
