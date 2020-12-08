@@ -14,6 +14,7 @@ function updateFilteredTable() {
 }
 
 function clearFilter() {
+    $("#filter")[0].reset();
     updateTable();
 }
 
